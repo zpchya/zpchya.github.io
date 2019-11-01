@@ -155,27 +155,85 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-数据结构与算法/剑指offer/01-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-数据结构与算法/剑指offer/01数值的整数次方" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01-1/">page</a>
+      <a class="article-title" href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9/">数值的整数次方</a>
     </h1>
   
 
         
-        <a href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01-1/" class="archive-article-date">
-  	<time datetime="2019-11-01T06:57:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
+        <a href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9/" class="archive-article-date">
+  	<time datetime="2019-11-01T09:19:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><hr>
+<p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><hr>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><ul>
+<li><strong>思路</strong><br>a的n次幂分4中情况进行讨论：  <ul>
+<li><ol>
+<li>当a=0且n!=0时，幂值为0；</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>当a!=0且n=0时，幂值为1；</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当n&gt;0时，通过累乘计算幂值；</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>当n&lt;0时，在累乘的基础上求倒数得到幂值。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>代码实现</strong>  <pre><code class="cpp"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
+<span class="keyword">public</span>:
+  <span class="function"><span class="keyword">double</span> <span class="title">Power</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span> </span>{
+      <span class="keyword">if</span> (base == <span class="number">0</span> &amp;&amp; exponent != <span class="number">0</span>)    <span class="comment">//基数为0</span>
+          <span class="keyword">return</span> <span class="number">0.0</span>;
+      <span class="keyword">if</span> (base != <span class="number">0</span> &amp;&amp; exponent == <span class="number">0</span>)
+          <span class="keyword">return</span> <span class="number">1.0</span>;
+      <span class="keyword">bool</span> flag = (exponent &gt; <span class="number">0</span>) ? <span class="literal">true</span> : <span class="literal">false</span>;    <span class="comment">//指数是否为负数</span>
+      <span class="keyword">if</span> (!flag)
+          exponent = -exponent;
+      <span class="keyword">double</span> ans = <span class="number">1.0</span>;
+      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; exponent; ++i)
+          ans *= base;
+      <span class="keyword">if</span> (!flag)    <span class="comment">//如果指数为负，取倒数</span>
+          ans = <span class="number">1</span> / ans;
+      <span class="keyword">return</span> ans;
+  }
+};  </code></pre>
+</li>
+</ul>
+<ul>
+<li><strong>复杂度分析</strong>  <ul>
+<li><ol>
+<li>时间复杂度<br>循环执行次数和指数exponent绝对值的大小成正比，所以时间复杂度为O(n)。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>空间复杂度<br>程序运行期间所占内存空间仅有几个临时变量，不随输入值的大小变化，空间复杂度为O(1)。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+
       
 
       
@@ -187,69 +245,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-数据结构与算法/剑指offer/01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01/">page</a>
-    </h1>
-  
-
-        
-        <a href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01/" class="archive-article-date">
-  	<time datetime="2019-11-01T06:56:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/11/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/01%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9/">展开全文 >></a>
         </p>
       
 
