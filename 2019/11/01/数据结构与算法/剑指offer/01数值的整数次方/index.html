@@ -8,14 +8,14 @@
   <link rel="dns-prefetch" href="http://zpchya.github.io">
   <title>数值的整数次方 | zpchya的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目描述 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。 解决方法 方案一 思路a的n次幂分4中情况进行讨论：    当a=0且n!=0时，幂值为0；    当a!=0且n=0时，幂值为1；    当n&amp;gt;0时，通过累乘计算幂值；    当n&amp;lt;0时，在累乘的基础上求倒数得到幂值。">
+  <meta name="description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。 解决方法方案一 思路a的n次幂分4中情况进行讨论：    当a=0且n!=0时，幂值为0； 当a!=0且n=0时，幂值为1； 当n&amp;gt;0时，通过累乘计算幂值； 当n&amp;lt;0时，在累乘的基础上求倒数得到幂值。   代码实现   123">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数值的整数次方">
 <meta property="og:url" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;2019&#x2F;11&#x2F;01&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95&#x2F;%E5%89%91%E6%8C%87offer&#x2F;01%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9&#x2F;index.html">
 <meta property="og:site_name" content="zpchya的博客">
-<meta property="og:description" content="题目描述 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。 解决方法 方案一 思路a的n次幂分4中情况进行讨论：    当a=0且n!=0时，幂值为0；    当a!=0且n=0时，幂值为1；    当n&amp;gt;0时，通过累乘计算幂值；    当n&amp;lt;0时，在累乘的基础上求倒数得到幂值。">
+<meta property="og:description" content="题目描述给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。 解决方法方案一 思路a的n次幂分4中情况进行讨论：    当a=0且n!=0时，幂值为0； 当a!=0且n=0时，幂值为1； 当n&amp;gt;0时，通过累乘计算幂值； 当n&amp;lt;0时，在累乘的基础上求倒数得到幂值。   代码实现   123">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-01T09:45:56.375Z">
+<meta property="og:updated_time" content="2019-11-01T12:45:57.429Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="zpchya的博客" type="application/atom+xml">
@@ -176,61 +176,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><hr>
-<p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><hr>
-<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><ul>
-<li><strong>思路</strong><br>a的n次幂分4中情况进行讨论：  <ul>
-<li><ol>
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><ul>
+<li><p><strong>思路</strong><br>a的n次幂分4中情况进行讨论：  </p>
+<ul>
 <li>当a=0且n!=0时，幂值为0；</li>
-</ol>
-</li>
-<li><ol start="2">
 <li>当a!=0且n=0时，幂值为1；</li>
-</ol>
-</li>
-<li><ol start="3">
 <li>当n&gt;0时，通过累乘计算幂值；</li>
-</ol>
-</li>
-<li><ol start="4">
 <li>当n&lt;0时，在累乘的基础上求倒数得到幂值。</li>
-</ol>
-</li>
 </ul>
 </li>
-</ul>
+<li><p><strong>代码实现</strong>  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">Power</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (base == <span class="number">0</span> &amp;&amp; exponent != <span class="number">0</span>)    <span class="comment">//基数为0</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">if</span> (base != <span class="number">0</span> &amp;&amp; exponent == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">bool</span> flag = (exponent &gt; <span class="number">0</span>) ? <span class="literal">true</span> : <span class="literal">false</span>;    <span class="comment">//指数是否为负数</span></span><br><span class="line">        <span class="keyword">if</span> (!flag)</span><br><span class="line">            exponent = -exponent;</span><br><span class="line">        <span class="keyword">double</span> ans = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; exponent; ++i)</span><br><span class="line">            ans *= base;</span><br><span class="line">        <span class="keyword">if</span> (!flag)    <span class="comment">//如果指数为负，取倒数</span></span><br><span class="line">            ans = <span class="number">1</span> / ans;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>复杂度分析</strong>  </p>
 <ul>
-<li><strong>代码实现</strong>  <pre><code class="cpp"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-<span class="keyword">public</span>:
-  <span class="function"><span class="keyword">double</span> <span class="title">Power</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span> </span>{
-      <span class="keyword">if</span> (base == <span class="number">0</span> &amp;&amp; exponent != <span class="number">0</span>)    <span class="comment">//基数为0</span>
-          <span class="keyword">return</span> <span class="number">0.0</span>;
-      <span class="keyword">if</span> (base != <span class="number">0</span> &amp;&amp; exponent == <span class="number">0</span>)
-          <span class="keyword">return</span> <span class="number">1.0</span>;
-      <span class="keyword">bool</span> flag = (exponent &gt; <span class="number">0</span>) ? <span class="literal">true</span> : <span class="literal">false</span>;    <span class="comment">//指数是否为负数</span>
-      <span class="keyword">if</span> (!flag)
-          exponent = -exponent;
-      <span class="keyword">double</span> ans = <span class="number">1.0</span>;
-      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; exponent; ++i)
-          ans *= base;
-      <span class="keyword">if</span> (!flag)    <span class="comment">//如果指数为负，取倒数</span>
-          ans = <span class="number">1</span> / ans;
-      <span class="keyword">return</span> ans;
-  }
-};  </code></pre>
-</li>
-</ul>
-<ul>
-<li><strong>复杂度分析</strong>  <ul>
-<li><ol>
 <li>时间复杂度<br>循环执行次数和指数exponent绝对值的大小成正比，所以时间复杂度为O(n)。</li>
-</ol>
-</li>
-<li><ol start="2">
 <li>空间复杂度<br>程序运行期间所占内存空间仅有几个临时变量，不随输入值的大小变化，空间复杂度为O(1)。</li>
-</ol>
-</li>
 </ul>
 </li>
 </ul>
