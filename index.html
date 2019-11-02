@@ -189,6 +189,25 @@
 </ul>
 </li>
 </ul>
+<h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><ul>
+<li><strong>分析</strong><br>在方案一中，a的n次幂求解与指数exponent有关，乘法运算次数与指数成正比。举个例子2^6可以分解成(2^3) * (2^3)，这样就少了一半的运算次数，而2^3可以表示成(2^1) * (2^1) * 2。可知可由递归算法解决。<ul>
+<li>递归公式：<code>a(n)=a(n/2)*a(n/2)</code>，当n为偶数时；<code>a(n)=a(n/2)*a(n/2)*a</code>，当n为奇数时。</li>
+<li>递归终止条件：<code>a(1)=a</code>，a为底数。</li>
+</ul>
+</li>
+<li><strong>代码实现</strong>    <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">Power</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (base == <span class="number">0</span> &amp;&amp; exponent != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">if</span> (base != <span class="number">0</span> &amp;&amp; exponent == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1.0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">double</span> ans = <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">unsigned</span> absExponent = <span class="keyword">static_cast</span>&lt;<span class="keyword">unsigned</span>&gt;(exponent);</span><br><span class="line">        <span class="keyword">if</span> (exponent &lt; <span class="number">0</span>)</span><br><span class="line">            absExponent = -exponent;</span><br><span class="line">        ans = recurProduct(base, absExponent);    <span class="comment">//递归实现求幂</span></span><br><span class="line">        <span class="keyword">if</span> (exponent &lt; <span class="number">0</span>)</span><br><span class="line">            ans = <span class="number">1</span> / ans;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">recurProduct</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span>    <span class="comment">//递归实现</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (exponent == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> base;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> ret = <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">double</span> temp = recurProduct(base, exponent &gt;&gt; <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (exponent &amp; <span class="number">0x01</span>)</span><br><span class="line">            ret = temp * temp * base;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            ret = temp * temp;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码优化细节<br>用<code>exponent&gt;&gt;1</code>代替<code>exponent/2</code>，用<code>exponent&amp;0x01</code>代替<code>exponent%2</code>，写代码时应该有优化意识，知道哪里可以怎样优化。</li>
+</ul>
+</li>
+<li><strong>复杂度分析</strong><ul>
+<li>时间复杂度<br>递推公式可表示为<code>a(n)=C*a(n/2)*a(n/2)</code>,其中C为常数。那么，<code>a(n)=C*a[n/(logn)]*a[n/(logn)]*...*a[n/(logn)]</code>，其中<code>a[n/(long)]</code>即<code>a(1)</code>的个数为logn，所以时间复杂度为O(logn)。</li>
+<li>空间复杂度<br>无论是在<code>Power函数</code>还是<code>recurProduct函数</code>中，函数执行所占空间为常量大小不随输入参数变化，所以空间复杂度为O(1)。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><a href="https://www.nowcoder.com/practice/1a834e5e3e1a4b7ba251417554e07c00?tpId=13&tqId=11165&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网提供编辑器</a></p>
 
       
 
@@ -203,6 +222,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
         		</li>
       		
 		</ul>
@@ -336,6 +359,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">剑指offer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
               </li>
             
             <div class="clearfix"></div>
