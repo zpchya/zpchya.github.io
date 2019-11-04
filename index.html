@@ -149,6 +149,95 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-数据结构与算法/剑指offer/03树的子结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/03%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/">树的子结构</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/03%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2019-11-04T11:54:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="方案一（错误）"><a href="#方案一（错误）" class="headerlink" title="方案一（错误）"></a>方案一（错误）</h4><ul>
+<li><strong>分析</strong><br>分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。</li>
+<li><strong>代码实现</strong>    <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	struct TreeNode &#123;</span></span><br><span class="line"><span class="comment">		int val;</span></span><br><span class="line"><span class="comment">		struct TreeNode *left;</span></span><br><span class="line"><span class="comment">		struct TreeNode *right;</span></span><br><span class="line"><span class="comment">		TreeNode(int x) :</span></span><br><span class="line"><span class="comment">				val(x), left(NULL), right(NULL) &#123;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">	&#125;;*/</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">	    <span class="comment">//前序遍历二叉树，并将结点值存放于容器vec中</span></span><br><span class="line">	    <span class="function"><span class="keyword">void</span> <span class="title">preorderTraversal</span><span class="params">(TreeNode *pRoot, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span></span><br><span class="line"><span class="function">	    </span>&#123;</span><br><span class="line">	        <span class="keyword">if</span> (!pRoot)</span><br><span class="line">	            <span class="keyword">return</span>;</span><br><span class="line">	        </span><br><span class="line">	        vec.push_back(pRoot-&gt;val);</span><br><span class="line">	        preorderTraversal(pRoot-&gt;left, vec);</span><br><span class="line">	        preorderTraversal(pRoot-&gt;right, vec);</span><br><span class="line">	    &#125;</span><br><span class="line">	    </span><br><span class="line">	    <span class="function"><span class="keyword">bool</span> <span class="title">HasSubtree</span><span class="params">(TreeNode* pRoot1, TreeNode* pRoot2)</span></span></span><br><span class="line"><span class="function">	    </span>&#123;</span><br><span class="line">	        <span class="keyword">if</span> (!pRoot1 || !pRoot2)</span><br><span class="line">	            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	        </span><br><span class="line">	        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec1, vec2;    <span class="comment">//用于存放二叉树各节点值</span></span><br><span class="line">	        preorderTraversal(pRoot1, vec1);</span><br><span class="line">	        preorderTraversal(pRoot2, vec2);</span><br><span class="line">	        <span class="keyword">auto</span> iter1 = vec1.cbegin();</span><br><span class="line">	        <span class="keyword">auto</span> iter2 = vec2.cbegin();</span><br><span class="line">	        <span class="keyword">while</span> (iter1 != vec1.cend())    <span class="comment">//暴力法求子串</span></span><br><span class="line">	        &#123;</span><br><span class="line">	            <span class="keyword">if</span> (*iter1 == *iter2)</span><br><span class="line">	            &#123;</span><br><span class="line">	                <span class="keyword">auto</span> tempIter1 = iter1;</span><br><span class="line">	                <span class="keyword">while</span> (iter2 != vec2.cend())</span><br><span class="line">	                &#123;</span><br><span class="line">	                    <span class="keyword">if</span> (*tempIter1 != *iter2)</span><br><span class="line">	                        <span class="keyword">break</span>;</span><br><span class="line">	                    ++iter2;</span><br><span class="line">	                    ++tempIter1;</span><br><span class="line">	                &#125;</span><br><span class="line">	                <span class="keyword">if</span> (iter2 == vec2.cend())</span><br><span class="line">	                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	            &#125;</span><br><span class="line">	            ++iter1;</span><br><span class="line">	        &#125;</span><br><span class="line">	        </span><br><span class="line">	        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	```  </span><br><span class="line">- **复杂度分析**</span><br><span class="line">	+ 时间复杂度  </span><br><span class="line">	假设A、B两颗二叉树的节点个数分别为m、n，那么前序遍历两颗二叉树的时间复杂度`O(m)`、`O(n)`，暴力法求子串的时间复杂度为`O(m*n)`（如果将求子串的方法变为`KMP`算法，时间复杂度会降低），所以时间复杂度为`O(m*n)`。</span><br><span class="line">	+ 空间复杂为  </span><br><span class="line">	存放两颗二叉树序列化结果的存储空间分别为`m*sizeof(elem)`、`n*sizeof(elem)`，所以空间复杂度为`O(m+n)`。</span><br><span class="line">- **为什么是错解**  </span><br><span class="line">	+ 首先题目的是`子结构`而不是`子树`，这是有差别的。例如下图：  </span><br><span class="line">	![二叉树A、B](E:\github\theme\source\img)  </span><br><span class="line">	二叉树B是二叉树A的`子结构`，却不是`子树`，所以对于子树适合，却不适用于子结构。</span><br><span class="line">	+ 看到讨论区许多人说`前序遍历得到序列不可以唯一确定一颗二叉树，所以这里不可以使用这种方法`，但是如提供的测试用例`<span class="number">88927</span>####<span class="number">7</span>`这样将结点补全的输入来说，序列化后得到的序列是可以唯一确定的。</span><br><span class="line"></span><br><span class="line">#### 方案二</span><br><span class="line">- **分析**  </span><br><span class="line">如果二叉树A中存在某个结点，该结点的值等于二叉树B根节点的值，该结点的左子树包含二叉树B的左子树，该结点的右子树包含二叉树B的右子树，那么二叉树B就是二叉树的A的子结构。不难发现，思路中含有二叉树定义的思想-`递归`，那么递归的递归公式和终止条件分别为：</span><br><span class="line">	+ 递归公式  </span><br><span class="line">	`f(pRootA, pRootB)=f(pRootA-&gt;left, pRootB-&gt;left) &amp;&amp; f(pRootA-&gt;right, pRootB-&gt;right) 且 pRootA-&gt;val=pRootB-&gt;val`。</span><br><span class="line">	+ 递归终止条件  </span><br><span class="line">	 `pRootA=<span class="literal">NULL</span>`或者`pRootB=<span class="literal">NULL</span>`。</span><br><span class="line">- **代码实现**</span><br><span class="line">	```cpp</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	struct TreeNode &#123;</span></span><br><span class="line"><span class="comment">		int val;</span></span><br><span class="line"><span class="comment">		struct TreeNode *left;</span></span><br><span class="line"><span class="comment">		struct TreeNode *right;</span></span><br><span class="line"><span class="comment">		TreeNode(int x) :</span></span><br><span class="line"><span class="comment">				val(x), left(NULL), right(NULL) &#123;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">	&#125;;*/</span></span><br><span class="line">	class Solution &#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">	    <span class="comment">//判断从当前结点出发，二叉树2是否是二叉树1的子结构</span></span><br><span class="line">	    <span class="keyword">bool</span> isSubtree(TreeNode *pRoot1, TreeNode *pRoot2)    </span><br><span class="line">	    &#123;</span><br><span class="line">	        <span class="keyword">if</span> (!pRoot1 &amp;&amp; pRoot2) </span><br><span class="line">	            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	        <span class="keyword">if</span> (!pRoot2)</span><br><span class="line">	            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	        </span><br><span class="line">	        <span class="keyword">if</span> (pRoot1-&gt;val == pRoot2-&gt;val)</span><br><span class="line">	            <span class="keyword">return</span> (isSubtree(pRoot1-&gt;left, pRoot2-&gt;left) &amp;&amp; \</span><br><span class="line">	                    isSubtree(pRoot1-&gt;right, pRoot2-&gt;right));</span><br><span class="line">	        </span><br><span class="line">	        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	    </span><br><span class="line">	    <span class="function"><span class="keyword">bool</span> <span class="title">HasSubtree</span><span class="params">(TreeNode* pRoot1, TreeNode* pRoot2)</span></span></span><br><span class="line"><span class="function">	    </span>&#123;</span><br><span class="line">	        <span class="keyword">if</span> (!pRoot1 || !pRoot2)</span><br><span class="line">	            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	        </span><br><span class="line">	        <span class="keyword">return</span> (isSubtree(pRoot1, pRoot2) || \</span><br><span class="line">	                HasSubtree(pRoot1-&gt;left, pRoot2) || \</span><br><span class="line">	                HasSubtree(pRoot1-&gt;right, pRoot2));</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><strong>复杂度分析</strong>  <ul>
+<li>时间复杂度<br>假设两颗二叉树的节点个数分别为m、n。当两颗二叉树在根节点位置匹配时，有<code>最好情况复杂度</code>为<code>O(n)</code>；当二叉树B与二叉树A匹配的节点在A的最后位置处时，有<code>最坏情况复杂度</code>为O(m<em>n)；<code>平均情况复杂度</code>也为O(m</em>n)。</li>
+<li>空间复杂度<br>O(1)。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><em>二叉树问题要有递归思想解决问题的想法</em><br><a href="https://www.nowcoder.com/practice/6e196c44c7004d15b1610b9afca8bd88?tpId=13&tqId=11170&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网提供编辑器</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/03%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-数据结构与算法/剑指offer/02调整数组顺序使奇数位于偶数前面" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
