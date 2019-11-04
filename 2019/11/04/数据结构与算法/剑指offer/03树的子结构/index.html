@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://zpchya.github.io">
   <title>树的子结构 | zpchya的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目描述输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构） 解决方案方案一（错误） 分析分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。  代码实现   &#x2F;* struct TreeNode {     int val;     struct TreeNode *left;     struct TreeNod">
+  <meta name="description" content="题目描述输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构） 解决方案方案一（错误） 分析分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。 代码实现    1234567891011121314151617181920212223242526272829303132333435363738394041424344">
 <meta name="keywords" content="剑指offer,数据结构与算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树的子结构">
 <meta property="og:url" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;2019&#x2F;11&#x2F;04&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95&#x2F;%E5%89%91%E6%8C%87offer&#x2F;03%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84&#x2F;index.html">
 <meta property="og:site_name" content="zpchya的博客">
-<meta property="og:description" content="题目描述输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构） 解决方案方案一（错误） 分析分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。  代码实现   &#x2F;* struct TreeNode {     int val;     struct TreeNode *left;     struct TreeNod">
+<meta property="og:description" content="题目描述输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构） 解决方案方案一（错误） 分析分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。 代码实现    1234567891011121314151617181920212223242526272829303132333435363738394041424344">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;images&#x2F;%E5%89%91%E6%8C%87offer03_1.jpg">
-<meta property="og:updated_time" content="2019-11-04T13:46:56.689Z">
+<meta property="og:updated_time" content="2019-11-04T13:50:32.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;images&#x2F;%E5%89%91%E6%8C%87offer03_1.jpg">
   
@@ -175,123 +175,27 @@
       
         <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="方案一（错误）"><a href="#方案一（错误）" class="headerlink" title="方案一（错误）"></a>方案一（错误）</h4><ul>
-<li><p><strong>分析</strong><br>分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。</p>
-</li>
-<li><p><strong>代码实现</strong>  </p>
-<pre><code class="cpp"><span class="comment">/*</span>
-<span class="comment">struct TreeNode {</span>
-<span class="comment">    int val;</span>
-<span class="comment">    struct TreeNode *left;</span>
-<span class="comment">    struct TreeNode *right;</span>
-<span class="comment">    TreeNode(int x) :</span>
-<span class="comment">            val(x), left(NULL), right(NULL) {</span>
-<span class="comment">    }</span>
-<span class="comment">};*/</span>
-<span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-<span class="keyword">public</span>:
-    <span class="comment">//前序遍历二叉树，并将结点值存放于容器vec中</span>
-    <span class="function"><span class="keyword">void</span> <span class="title">preorderTraversal</span><span class="params">(TreeNode *pRoot, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span>
-<span class="function">    </span>{
-        <span class="keyword">if</span> (!pRoot)
-            <span class="keyword">return</span>;
-
-        vec.push_back(pRoot-&gt;val);
-        preorderTraversal(pRoot-&gt;left, vec);
-        preorderTraversal(pRoot-&gt;right, vec);
-    }
-
-    <span class="function"><span class="keyword">bool</span> <span class="title">HasSubtree</span><span class="params">(TreeNode* pRoot1, TreeNode* pRoot2)</span></span>
-<span class="function">    </span>{
-        <span class="keyword">if</span> (!pRoot1 || !pRoot2)
-            <span class="keyword">return</span> <span class="literal">false</span>;
-
-        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec1, vec2;    <span class="comment">//用于存放二叉树各节点值</span>
-        preorderTraversal(pRoot1, vec1);
-        preorderTraversal(pRoot2, vec2);
-        <span class="keyword">auto</span> iter1 = vec1.cbegin();
-        <span class="keyword">auto</span> iter2 = vec2.cbegin();
-        <span class="keyword">while</span> (iter1 != vec1.cend())    <span class="comment">//暴力法求子串</span>
-        {
-            <span class="keyword">if</span> (*iter1 == *iter2)
-            {
-                <span class="keyword">auto</span> tempIter1 = iter1;
-                <span class="keyword">while</span> (iter2 != vec2.cend())
-                {
-                    <span class="keyword">if</span> (*tempIter1 != *iter2)
-                        <span class="keyword">break</span>;
-                    ++iter2;
-                    ++tempIter1;
-                }
-                <span class="keyword">if</span> (iter2 == vec2.cend())
-                    <span class="keyword">return</span> <span class="literal">true</span>;
-            }
-            ++iter1;
-        }
-
-        <span class="keyword">return</span> <span class="literal">false</span>;
-    }
-};</code></pre>
-</li>
-<li><p><strong>复杂度分析</strong></p>
-<ul>
+<li><strong>分析</strong><br>分别前序遍历两颗二叉树，序列化二叉树得到两串数据；然后判断B得到的序列是否为A得到的序列的子串。</li>
+<li><strong>代码实现</strong>    <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">struct TreeNode &#123;</span></span><br><span class="line"><span class="comment">	int val;</span></span><br><span class="line"><span class="comment">	struct TreeNode *left;</span></span><br><span class="line"><span class="comment">	struct TreeNode *right;</span></span><br><span class="line"><span class="comment">	TreeNode(int x) :</span></span><br><span class="line"><span class="comment">			val(x), left(NULL), right(NULL) &#123;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">&#125;;*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//前序遍历二叉树，并将结点值存放于容器vec中</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">preorderTraversal</span><span class="params">(TreeNode *pRoot, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!pRoot)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        vec.push_back(pRoot-&gt;val);</span><br><span class="line">        preorderTraversal(pRoot-&gt;left, vec);</span><br><span class="line">        preorderTraversal(pRoot-&gt;right, vec);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">HasSubtree</span><span class="params">(TreeNode* pRoot1, TreeNode* pRoot2)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!pRoot1 || !pRoot2)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec1, vec2;    <span class="comment">//用于存放二叉树各节点值</span></span><br><span class="line">        preorderTraversal(pRoot1, vec1);</span><br><span class="line">        preorderTraversal(pRoot2, vec2);</span><br><span class="line">        <span class="keyword">auto</span> iter1 = vec1.cbegin();</span><br><span class="line">        <span class="keyword">auto</span> iter2 = vec2.cbegin();</span><br><span class="line">        <span class="keyword">while</span> (iter1 != vec1.cend())    <span class="comment">//暴力法求子串</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (*iter1 == *iter2)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> tempIter1 = iter1;</span><br><span class="line">                <span class="keyword">while</span> (iter2 != vec2.cend())</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (*tempIter1 != *iter2)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    ++iter2;</span><br><span class="line">                    ++tempIter1;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (iter2 == vec2.cend())</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            ++iter1;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><strong>复杂度分析</strong><ul>
 <li>时间复杂度<br>假设A、B两颗二叉树的节点个数分别为m、n，那么前序遍历两颗二叉树的时间复杂度<code>O(m)</code>、<code>O(n)</code>，暴力法求子串的时间复杂度为<code>O(m*n)</code>（如果将求子串的方法变为<code>KMP</code>算法，时间复杂度会降低），所以时间复杂度为<code>O(m*n)</code>。</li>
 <li>空间复杂为<br>存放两颗二叉树序列化结果的存储空间分别为<code>m*sizeof(elem)</code>、<code>n*sizeof(elem)</code>，所以空间复杂度为<code>O(m+n)</code>。</li>
 </ul>
 </li>
-<li><p><strong>为什么是错解</strong>  </p>
-<ul>
+<li><strong>为什么是错解</strong>  <ul>
 <li>首先题目的是<code>子结构</code>而不是<code>子树</code>，这是有差别的。例如下图：<br><img src="/images/%E5%89%91%E6%8C%87offer03_1.jpg" alt="二叉树A、B"><br>二叉树B是二叉树A的<code>子结构</code>，却不是<code>子树</code>，所以对于子树适合，却不适用于子结构。</li>
 <li>看到讨论区许多人说<code>前序遍历得到序列不可以唯一确定一颗二叉树，所以这里不可以使用这种方法</code>，但是如提供的测试用例<code>88927####7</code>这样将结点补全的输入来说，序列化后得到的序列是可以唯一确定的。</li>
 </ul>
 </li>
 </ul>
 <h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><ul>
-<li><p><strong>分析</strong><br>如果二叉树A中存在某个结点，该结点的值等于二叉树B根节点的值，该结点的左子树包含二叉树B的左子树，该结点的右子树包含二叉树B的右子树，那么二叉树B就是二叉树的A的子结构。不难发现，思路中含有二叉树定义的思想-<code>递归</code>，那么递归的递归公式和终止条件分别为：</p>
-<ul>
+<li><strong>分析</strong><br>如果二叉树A中存在某个结点，该结点的值等于二叉树B根节点的值，该结点的左子树包含二叉树B的左子树，该结点的右子树包含二叉树B的右子树，那么二叉树B就是二叉树的A的子结构。不难发现，思路中含有二叉树定义的思想-<code>递归</code>，那么递归的递归公式和终止条件分别为：<ul>
 <li>递归公式<br><code>f(pRootA, pRootB)=f(pRootA-&gt;left, pRootB-&gt;left) &amp;&amp; f(pRootA-&gt;right, pRootB-&gt;right) 且 pRootA-&gt;val=pRootB-&gt;val</code>。</li>
 <li>递归终止条件<br><code>pRootA=NULL</code>或者<code>pRootB=NULL</code>。</li>
 </ul>
 </li>
-<li><p><strong>代码实现</strong></p>
-<pre><code class="cpp"><span class="comment">/*</span>
-<span class="comment">struct TreeNode {</span>
-<span class="comment">    int val;</span>
-<span class="comment">    struct TreeNode *left;</span>
-<span class="comment">    struct TreeNode *right;</span>
-<span class="comment">    TreeNode(int x) :</span>
-<span class="comment">            val(x), left(NULL), right(NULL) {</span>
-<span class="comment">    }</span>
-<span class="comment">};*/</span>
-<span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-<span class="keyword">public</span>:
-    <span class="comment">//判断从当前结点出发，二叉树2是否是二叉树1的子结构</span>
-    <span class="function"><span class="keyword">bool</span> <span class="title">isSubtree</span><span class="params">(TreeNode *pRoot1, TreeNode *pRoot2)</span>    </span>
-<span class="function">    </span>{
-        <span class="keyword">if</span> (!pRoot1 &amp;&amp; pRoot2) 
-            <span class="keyword">return</span> <span class="literal">false</span>;
-        <span class="keyword">if</span> (!pRoot2)
-            <span class="keyword">return</span> <span class="literal">true</span>;
-
-        <span class="keyword">if</span> (pRoot1-&gt;val == pRoot2-&gt;val)
-            <span class="keyword">return</span> (isSubtree(pRoot1-&gt;left, pRoot2-&gt;left) &amp;&amp; \
-                    isSubtree(pRoot1-&gt;right, pRoot2-&gt;right));
-
-        <span class="keyword">return</span> <span class="literal">false</span>;
-    }
-
-    <span class="function"><span class="keyword">bool</span> <span class="title">HasSubtree</span><span class="params">(TreeNode* pRoot1, TreeNode* pRoot2)</span></span>
-<span class="function">    </span>{
-        <span class="keyword">if</span> (!pRoot1 || !pRoot2)
-            <span class="keyword">return</span> <span class="literal">false</span>;
-
-        <span class="keyword">return</span> (isSubtree(pRoot1, pRoot2) || \
-                HasSubtree(pRoot1-&gt;left, pRoot2) || \
-                HasSubtree(pRoot1-&gt;right, pRoot2));
-    }
-};</code></pre>
-</li>
-<li><p><strong>复杂度分析</strong>  </p>
-<ul>
+<li><strong>代码实现</strong>  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">struct TreeNode &#123;</span></span><br><span class="line"><span class="comment">	int val;</span></span><br><span class="line"><span class="comment">	struct TreeNode *left;</span></span><br><span class="line"><span class="comment">	struct TreeNode *right;</span></span><br><span class="line"><span class="comment">	TreeNode(int x) :</span></span><br><span class="line"><span class="comment">			val(x), left(NULL), right(NULL) &#123;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">&#125;;*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//判断从当前结点出发，二叉树2是否是二叉树1的子结构</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSubtree</span><span class="params">(TreeNode *pRoot1, TreeNode *pRoot2)</span>    </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!pRoot1 &amp;&amp; pRoot2) </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (!pRoot2)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (pRoot1-&gt;val == pRoot2-&gt;val)</span><br><span class="line">            <span class="keyword">return</span> (isSubtree(pRoot1-&gt;left, pRoot2-&gt;left) &amp;&amp; \</span><br><span class="line">                    isSubtree(pRoot1-&gt;right, pRoot2-&gt;right));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">HasSubtree</span><span class="params">(TreeNode* pRoot1, TreeNode* pRoot2)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!pRoot1 || !pRoot2)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> (isSubtree(pRoot1, pRoot2) || \</span><br><span class="line">                HasSubtree(pRoot1-&gt;left, pRoot2) || \</span><br><span class="line">                HasSubtree(pRoot1-&gt;right, pRoot2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><strong>复杂度分析</strong>  <ul>
 <li>时间复杂度<br>假设两颗二叉树的节点个数分别为m、n。当两颗二叉树在根节点位置匹配时，有<code>最好情况复杂度</code>为<code>O(n)</code>；当二叉树B与二叉树A匹配的节点在A的最后位置处时，有<code>最坏情况复杂度</code>为O(m<em>n)；<code>平均情况复杂度</code>也为O(m</em>n)。</li>
 <li>空间复杂度<br>O(1)。</li>
 </ul>
