@@ -149,6 +149,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-数据结构与算法/剑指offer/04顺势针打印矩阵" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/04%E9%A1%BA%E5%8A%BF%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/">顺时针打印矩阵</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/04%E9%A1%BA%E5%8A%BF%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/" class="archive-article-date">
+  	<time datetime="2019-11-05T02:51:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><ul>
+<li><strong>分析</strong><br>顺时针打印矩阵，那么我们就按照它的思路来，例如题目中4*4矩阵，先打印上边框<code>1 2 3 4</code>，再打印右边框<code>8 12 16</code>，然后打印下边框<code>15 14 13</code>，接着是左边框<code>9 5</code>，…，打印的同时更新上下左右边界，只要有一对边界重合，那么就打印完毕。</li>
+<li><strong>代码实现</strong>  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; printMatrix(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; matrix) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;    <span class="comment">//</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> xLen = matrix.size();    <span class="comment">//矩阵的行</span></span><br><span class="line">        <span class="keyword">if</span> (!xLen)</span><br><span class="line">            <span class="keyword">return</span> ans;</span><br><span class="line">        <span class="keyword">int</span> yLen = matrix[<span class="number">0</span>].size();    <span class="comment">//矩阵的列</span></span><br><span class="line">        <span class="keyword">if</span> (!yLen)</span><br><span class="line">            <span class="keyword">return</span> ans;</span><br><span class="line">        <span class="keyword">int</span> xMin = <span class="number">0</span>, xMax = xLen - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> yMin = <span class="number">0</span>, yMax = yLen - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = yMin; i &lt;= yMax; ++i)    <span class="comment">//打印上边框</span></span><br><span class="line">                ans.push_back(matrix[xMin][i]);</span><br><span class="line">            <span class="keyword">if</span> (++xMin &gt; xMax)    <span class="comment">//更新xMin</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = xMin; i &lt;= xMax; ++i)    <span class="comment">//打印右边框</span></span><br><span class="line">                ans.push_back(matrix[i][yMax]);</span><br><span class="line">            <span class="keyword">if</span> (--yMax &lt; yMin)    <span class="comment">//更新yMax</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = yMax; i &gt;= yMin; --i)    <span class="comment">//打印下边框</span></span><br><span class="line">                ans.push_back(matrix[xMax][i]);</span><br><span class="line">            <span class="keyword">if</span> (--xMax &lt; xMin)    <span class="comment">//更新xMax</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = xMax; i &gt;= xMin; --i)    <span class="comment">//打印左边框</span></span><br><span class="line">                ans.push_back(matrix[i][yMin]);</span><br><span class="line">            <span class="keyword">if</span> (++yMin &gt; yMax)    <span class="comment">//更新yMin</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><strong>复杂度分析</strong><ul>
+<li>时间复杂度<br>该算法是将矩阵所有点都遍历了一遍，假设矩阵共有n个点，那么<code>时间复杂度</code>为<code>O(n)</code>。</li>
+<li>空间复杂度<br>算法实现过程中用容器保存遍历的值，空间复杂度与矩阵的点个数有关，<code>空间复杂度</code>为<code>O(n)</code>。</li>
+</ul>
+</li>
+<li><strong>实现过程中犯的错</strong><br>  将<code>xMax/yMax</code>的数据类型设置为<code>size_t</code>，当<code>--xMax/--yMax</code>时存在对<em>0自减</em>的情况，使得上边界变为<code>size_t</code>类型的最大值，导致数据的越界访问。</li>
+</ul>
+<hr>
+<p><a href="https://www.nowcoder.com/practice/9b4c81a02cd34f76be2659fa0d54342a?tpId=13&tqId=11172&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网提供编辑器</a></p>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p><a href="">C++的自动类型转换</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/04%E9%A1%BA%E5%8A%BF%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-数据结构与算法/剑指offer/03树的子结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -297,7 +388,7 @@
 </ul>
 <hr>
 <p><a href="https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&tqId=11166&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网提供编辑器</a></p>
-<h3 id="拓展延伸"><a href="#拓展延伸" class="headerlink" title="拓展延伸"></a>拓展延伸</h3><ul>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><ul>
 <li><a href="https://www.cnblogs.com/zpchya/p/11098605.html" target="_blank" rel="noopener">vector容器的使用</a></li>
 </ul>
 
