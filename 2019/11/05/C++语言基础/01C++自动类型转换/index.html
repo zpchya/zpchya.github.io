@@ -16,11 +16,8 @@
 <meta property="og:site_name" content="zpchya的博客">
 <meta property="og:description" content="概念在一个表达式中，存在两种或两种以上的数据类型，编译器自动将多种数据类型转换为一种数据类型的过程叫做自动类型转换，也叫隐式转换。 出现场景 在大多数表达式中，比int类型小的整型值会先提升为int类型。 在条件表达式中，非布尔类型转化为布尔类型。 初始化过程中，初始值转换为变量类型；赋值语句中，右侧运算对象转换为左侧运算对象类型。 如果算术运算或关系运算的运算对象有多种类型，转换为同一类型。 函">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;images&#x2F;C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A201.PNG">
-<meta property="og:image" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;images&#x2F;C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A202.PNG">
-<meta property="og:updated_time" content="2019-11-06T03:07:01.048Z">
+<meta property="og:updated_time" content="2019-11-06T03:10:24.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;zpchya.github.io&#x2F;images&#x2F;C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A201.PNG">
   
     <link rel="alternative" href="/atom.xml" title="zpchya的博客" type="application/atom+xml">
   
@@ -189,13 +186,15 @@
 <li>如果提升后的运算对象类型都为有符号或者无符号，那么将较小类型的运算对象转换为较大类型。</li>
 <li>如果提后其中一个有符号、另一个无符号且无符号类型不小于有符号类型，那么将有符号类型的运算对象转换为无符号类型。  </li>
 </ul>
-  <strong>这里有一个好几次我犯错的地方，如果有符号类型运算对象值为负数，那么转换后的值为该负数加上无符号类型的模（也就是最大值）,导致意外的情况发生</strong>。例如下面指针情况：<br>  <img src="/images/C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A201.PNG" alt="示例"><br>  运行时发生错误-数组越界，<br>  <img src="/images/C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A202.PNG" alt="错误提示"><br>  将变量i的数据类型命名为<code>size_t</code>是因为<code>vector</code>容器的索引不存在负数，类型就为<code>size_t</code>；但是当<code>i=0</code>时，满足条件继续循环，然后自减，这是就出现问题了，<code>“size_t i = i - 1;”</code>就会将<code>-1</code>转换为<code>size_t类型的模-1</code>，是一个很大的数，超出了<code>vec</code>的索引范围导致越界访问。除此类情况外，有时也会导致死循环。<ul>
-<li>如果有符号类型数据范围大于无符号类型，此时转换结果取决于该计算机中数据类型的大小。<ul>
-<li>如果无符号类型的所有值都存在有符号类型数据范围内，那么将无符号类型运算对象转换为有符号数据类型。</li>
-<li>如果不能，那么将带符号类型运算对象转化为无符号类型。<br>例如，<code>unsigned int</code>和<code>long</code>，如果<code>long</code>和<code>int</code>所占字节数相同，那么将<code>long</code>转换为<code>unsigned int</code>；如果<code>long</code>比<code>int</code>所占字节数大，那么将<code>unsigned int</code>转换为<code>long</code>。</li>
-</ul>
-</li>
-</ul>
+  <strong>这里有一个好几次我犯错的地方，如果有符号类型运算对象值为负数，那么转换后的值为该负数加上无符号类型的模（也就是最大值）,导致意外的情况发生</strong>。例如下面指针情况：    <div align=center>![示例](/images/C++自动类型转换01.PNG)  
+  运行时发生错误-数组越界，  
+  <div align=center>![错误提示](/images/C++自动类型转换02.PNG)  
+  将变量i的数据类型命名为`size_t`是因为`vector`容器的索引不存在负数，类型就为`size_t`；但是当`i=0`时，满足条件继续循环，然后自减，这是就出现问题了，`“size_t i = i - 1;”`就会将`-1`转换为`size_t类型的模-1`，是一个很大的数，超出了`vec`的索引范围导致越界访问。除此类情况外，有时也会导致死循环。
+  - 如果有符号类型数据范围大于无符号类型，此时转换结果取决于该计算机中数据类型的大小。
+      + 如果无符号类型的所有值都存在有符号类型数据范围内，那么将无符号类型运算对象转换为有符号数据类型。
+      + 如果不能，那么将带符号类型运算对象转化为无符号类型。  
+  例如，`unsigned int`和`long`，如果`long`和`int`所占字节数相同，那么将`long`转换为`unsigned int`；如果`long`比`int`所占字节数大，那么将`unsigned int`转换为`long`。
+
 </li>
 </ul>
 <h3 id="其他隐式转换"><a href="#其他隐式转换" class="headerlink" title="其他隐式转换"></a>其他隐式转换</h3><ul>
