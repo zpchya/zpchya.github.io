@@ -178,10 +178,30 @@
 <li>函数调用时，实参值转换为形参类型。<h3 id="隐式转换之算术转换"><a href="#隐式转换之算术转换" class="headerlink" title="隐式转换之算术转换"></a>隐式转换之算术转换</h3>算术转换的规则是算术表达式中所有类型转换为其中数据类型范围最宽的类型。</li>
 <li><strong>整型提升</strong><br>整型提升就是将小整数类型转换为较大整数类型。例如<code>bool/char/unsigned char/short/unsigned short</code>，只要它们的值都存在<code>int</code>类型范围内，则提升为<code>int</code>类型；否则，提升为<code>unsigned int</code>。</li>
 <li><strong>无符号类型的转换</strong><br>表达式中，存在无符号类型的运算对象，则转换结果依赖于<em>计算机各个整数类型的相对大小</em>。<br>首先进行<em>整型提升</em>，<ul>
-<li>如果提升后的运算对象类型<em>都为有符号或者无符号</em>，那么<em>将较小类型的运算对象转换为较大类型</em>。</li>
-<li>如果提后<em>其中一个有符号、另一个无符号且无符号类型不小于有符号类型</em>，那么<em>将有符号类型的运算对象转换为无符号类型</em>。  </li>
+<li>如果提升后的运算对象类型都为有符号或者无符号，那么将较小类型的运算对象转换为较大类型。</li>
+<li>如果提后其中一个有符号、另一个无符号且无符号类型不小于有符号类型，那么将有符号类型的运算对象转换为无符号类型。  </li>
 </ul>
-  <strong>这里有一个好几次我犯错的地方，如果有符号类型运算对象值为负数，那么转换后的值为该负数加上无符号类型的模（也就是最大值）,导致意外的情况发生</strong>。</li>
+  <strong>这里有一个好几次我犯错的地方，如果有符号类型运算对象值为负数，那么转换后的值为该负数加上无符号类型的模（也就是最大值）,导致意外的情况发生</strong>。例如下面指针情况：<br>  <img src="/images/C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A201.PNG" alt="示例"><br>  运行时发生错误-<code>数组越界</code>，<br>  <img src="/images/C++%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A202.PNG" alt="错误提示"><br>  将变量i的数据类型命名为<code>size_t</code>是因为<code>vector</code>容器的索引不存在负数，类型就为<code>size_t</code>；但是当<code>i=0</code>时，满足条件继续循环，然后自减，这是就出现问题了，<code>“size_t i = i - 1;”</code>就会将<code>-1</code>转换为<code>size_t类型的模-1</code>，是一个很大的数，超出了<code>vec</code>的索引范围导致越界访问。除此类情况外，有时也会导致死循环。<ul>
+<li>如果有符号类型数据范围大于无符号类型，此时转换结果取决于该计算机中数据类型的大小。<ul>
+<li>如果无符号类型的所有值都存在有符号类型数据范围内，那么将无符号类型运算对象转换为有符号数据类型。</li>
+<li>如果不能，那么将带符号类型运算对象转化为无符号类型。<br>例如，<code>unsigned int</code>和<code>long</code>，如果<code>long</code>和<code>int</code>所占字节数相同，那么将<code>long</code>转换为<code>unsigned int</code>；如果<code>long</code>比<code>int</code>所占字节数大，那么将<code>unsigned int</code>转换为<code>long</code>。<h3 id="其他隐式转换"><a href="#其他隐式转换" class="headerlink" title="其他隐式转换"></a>其他隐式转换</h3></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数组转换为指针<br>在大多数用到数组的表达式中，<em>数组自动转换为数组首元素的指针</em>。下述集中情况除外：<ul>
+<li>取地址符<code>&amp;</code>的运算对象。</li>
+<li><code>sizeof</code>运算符的运算对象。</li>
+<li>用数组初始化引用，例如，    <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> (&amp;arrRef)[<span class="number">10</span>] = arr;</span><br></pre></td></tr></table></figure></li>
+<li>被用作<code>decltype</code>（当我们想使用某个表达式结果的数据类型但不想要其结果时使用）关键字的参数。</li>
+</ul>
+</li>
+<li>指针的转换<ul>
+<li>任意非常量指针转换为<code>void*</code>，指向任意对象的指针可以转换为<code>const void*</code>。</li>
+<li>派生类对象的指针转换为基类指针。</li>
+</ul>
+</li>
+<li>类类型定义的转换<br>如果类定义时定义了<code>转换构造函数</code>-即只接受一个参数的构造函数，那么类类型定义时会发生自动转换，将该参数转换为类类型。  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -594,6 +614,19 @@
 </ul>
 <hr>
 <p><a href="https://www.nowcoder.com/practice/1a834e5e3e1a4b7ba251417554e07c00?tpId=13&tqId=11165&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网提供编辑器</a></p>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="地平线面试算法题"><a href="#地平线面试算法题" class="headerlink" title="地平线面试算法题"></a>地平线面试算法题</h3><h4 id="题目表述"><a href="#题目表述" class="headerlink" title="题目表述"></a>题目表述</h4><p>通过+/-/&gt;&gt;/&lt;&lt;求商和余数。</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="方案一-1"><a href="#方案一-1" class="headerlink" title="方案一"></a>方案一</h5><ul>
+<li><strong>分析</strong><br>与上题中数值的整数次方类似，可以通过除数的累加，不断接近被除数。</li>
+<li><strong>代码实现</strong><ul>
+<li>v0_2019/11/06<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 函数功能：计算两个数的商和余数</span></span><br><span class="line"><span class="comment"> * 输入参数：被除数（int）dividend，除数（int）divisor</span></span><br><span class="line"><span class="comment"> * 输出参数：商存放地址（int *）pConsult，余数存放地址（int *）pRemainder</span></span><br><span class="line"><span class="comment"> * 返 回 值：函数是否执行成功 1：除数为0 0：函数执行成功</span></span><br><span class="line"><span class="comment"> * 作    者：zpchya</span></span><br><span class="line"><span class="comment"> * 版    本：v0_2019/11/06</span></span><br><span class="line"><span class="comment"> ************************************************************************</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calculateConsultAndremainder</span><span class="params">(<span class="keyword">int</span> *pConsult, <span class="keyword">int</span> *pRemainder, <span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!divisor)	<span class="comment">//输入无效</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (!dividend)	<span class="comment">//被除数为0</span></span><br><span class="line">	&#123;</span><br><span class="line">		pConsult[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">		pRemainder[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> ((dividend &lt; <span class="number">0</span> &amp;&amp; divisor &gt; <span class="number">0</span>) || (dividend &gt; <span class="number">0</span> &amp;&amp; divisor &lt; <span class="number">0</span>))	<span class="comment">//两个数互为异号</span></span><br><span class="line">		flag = <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> absDividend = dividend, absDivisor = divisor;</span><br><span class="line">	<span class="keyword">if</span> (dividend &lt; <span class="number">0</span>)</span><br><span class="line">		absDividend = -dividend;</span><br><span class="line">	<span class="keyword">if</span> (divisor &lt; <span class="number">0</span>)</span><br><span class="line">		absDivisor = -divisor;</span><br><span class="line">	<span class="keyword">unsigned</span> temp = absDivisor;</span><br><span class="line">	<span class="keyword">while</span> (absDividend &gt;= temp)</span><br><span class="line">	&#123;</span><br><span class="line">		++pConsult[<span class="number">0</span>];	<span class="comment">//商加1</span></span><br><span class="line">		temp += absDivisor;</span><br><span class="line">	&#125;</span><br><span class="line">	pRemainder[<span class="number">0</span>] = absDividend - temp + absDivisor;</span><br><span class="line">	<span class="keyword">if</span> (flag)	<span class="comment">//两个数互为异号则商为负</span></span><br><span class="line">		pConsult[<span class="number">0</span>] = -pConsult[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">if</span> (dividend &lt; <span class="number">0</span> || divisor &lt; <span class="number">0</span>)</span><br><span class="line">		pRemainder[<span class="number">0</span>] = -pRemainder[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>复杂度分析</strong><ul>
+<li>时间复杂度<br>程序中循环的执行次数与被除数与除数的商成正比，所以时间复杂度为O(n)。</li>
+<li>空间复杂<br>O(1)。</li>
+</ul>
+</li>
+</ul>
 
       
 
