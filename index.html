@@ -149,6 +149,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-数据结构与算法/剑指offer/06复杂链表的复制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/06%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/">复杂链表的复制</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/06%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/" class="archive-article-date">
+  	<time datetime="2019-11-07T06:34:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><ul>
+<li><strong>分析</strong><br>复杂链表的复制可以分为两步：一是通过复杂链表指向下一个节点的指针遍历链表，获取各个节点的值，通过指向下一个节点的指针域将各个节点连接起来；二是遍历复制后的链表，补充链表节点的特殊指针域。第二步骤存在一个问题就是：怎么知道结点的特殊指针指向链表中的哪个结点？<br>可以首先创建一个索引为各个节点指针、键值为结点顺序位置的哈希表；然后再次遍历原复杂链表，记录当前结点的特殊指针指向结点顺序位置。</li>
+<li><strong>代码实现</strong><ul>
+<li>v0_2019/11/07  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">struct RandomListNode &#123;</span></span><br><span class="line"><span class="comment">    int label;</span></span><br><span class="line"><span class="comment">    struct RandomListNode *next, *random;</span></span><br><span class="line"><span class="comment">    RandomListNode(int x) :</span></span><br><span class="line"><span class="comment">            label(x), next(NULL), random(NULL) &#123;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">RandomListNode* <span class="title">Clone</span><span class="params">(RandomListNode* pHead)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pHead == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//获取每个节点的值以及各个节点在链表中的顺序位置</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nodeVal;</span><br><span class="line">        <span class="built_in">map</span>&lt;RandomListNode *, <span class="keyword">int</span>&gt; nodeIndex;    <span class="comment">//各个节点在链表中的顺序</span></span><br><span class="line">        RandomListNode *pWork = pHead;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (pWork != <span class="literal">nullptr</span>)    <span class="comment">//遍历链表</span></span><br><span class="line">        &#123;</span><br><span class="line">            nodeVal.push_back(pWork-&gt;label);</span><br><span class="line">            nodeIndex[pWork] = i;</span><br><span class="line">            ++i;</span><br><span class="line">            pWork = pWork-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//再次遍历链表确定第i个结点的复杂指针指向第i个结点</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; randomIndex;</span><br><span class="line">        pWork = pHead;</span><br><span class="line">        <span class="keyword">while</span> (pWork != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> index = <span class="number">-1</span>; <span class="comment">/**/</span></span><br><span class="line">            <span class="keyword">if</span> (nodeIndex.find(pWork-&gt;random) != nodeIndex.end())</span><br><span class="line">                index = nodeIndex[pWork-&gt;random];            </span><br><span class="line">            randomIndex.push_back(index);</span><br><span class="line">            pWork = pWork-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//创建链表</span></span><br><span class="line">        RandomListNode *pSenNode = <span class="keyword">new</span> RandomListNode(<span class="number">0</span>);    <span class="comment">//哨兵结点</span></span><br><span class="line">        RandomListNode *pRear = pSenNode;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, RandomListNode *&gt; indexNode;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; nodeVal.size(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            RandomListNode *pNewNode = <span class="keyword">new</span> RandomListNode(nodeVal[i]);</span><br><span class="line">            indexNode[i] = pNewNode;</span><br><span class="line">            pNewNode-&gt;next = pRear-&gt;next;</span><br><span class="line">            pRear-&gt;next = pNewNode;</span><br><span class="line">            pRear = pRear-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//补充random指针</span></span><br><span class="line">        RandomListNode *pTraverse = pSenNode-&gt;next;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (pTraverse != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (randomIndex[j] == <span class="number">-1</span>)</span><br><span class="line">                pTraverse-&gt;random = <span class="literal">nullptr</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                pTraverse-&gt;random = indexNode[randomIndex[j]];</span><br><span class="line">            pTraverse = pTraverse-&gt;next;</span><br><span class="line">            ++j;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> pSenNode-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li>v1_2019/11/07<br>改变了特殊指针指向的查询方法。由原来的通过<code>节点顺序位置</code>变为现在的<code>节点对应关系</code>。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">struct RandomListNode &#123;</span></span><br><span class="line"><span class="comment">    int label;</span></span><br><span class="line"><span class="comment">    struct RandomListNode *next, *random;</span></span><br><span class="line"><span class="comment">    RandomListNode(int x) :</span></span><br><span class="line"><span class="comment">            label(x), next(NULL), random(NULL) &#123;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">RandomListNode* <span class="title">Clone</span><span class="params">(RandomListNode* pHead)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pHead == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//复制复杂链表</span></span><br><span class="line">        RandomListNode *pWork1 = pHead;    <span class="comment">//原链表遍历指针</span></span><br><span class="line">        RandomListNode *pSenNode = <span class="keyword">new</span> RandomListNode(<span class="number">0</span>);    <span class="comment">//哨兵节点</span></span><br><span class="line">        RandomListNode *pRear = pSenNode;    <span class="comment">//复制链表尾结点指针</span></span><br><span class="line">        <span class="built_in">map</span>&lt;RandomListNode *, RandomListNode *&gt; templateToCloneMap;    <span class="comment">//原链表结点与复制链表结点对应关系</span></span><br><span class="line">        <span class="keyword">while</span> (pWork1 != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//创建复制链表</span></span><br><span class="line">            RandomListNode *pNewNode = <span class="keyword">new</span> RandomListNode(pWork1-&gt;label);</span><br><span class="line">            pNewNode-&gt;next = pRear-&gt;next;</span><br><span class="line">            pRear-&gt;next = pNewNode;</span><br><span class="line">            pRear = pRear-&gt;next;</span><br><span class="line">            <span class="comment">//构建Map</span></span><br><span class="line">            templateToCloneMap[pWork1] = pNewNode;</span><br><span class="line">            <span class="comment">//遍历原链表</span></span><br><span class="line">            pWork1 = pWork1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//补充特殊指针域</span></span><br><span class="line">        pWork1 = pHead;</span><br><span class="line">        RandomListNode *pWork2 = pSenNode-&gt;next;</span><br><span class="line">        <span class="keyword">while</span> (pWork2 != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            pWork2-&gt;random = templateToCloneMap[pWork1-&gt;random];</span><br><span class="line">            pWork2 = pWork2-&gt;next;</span><br><span class="line">            pWork1 = pWork1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> pSenNode-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>复杂度分析</strong><ul>
+<li>时间复杂度<br>与算法遍历链表的次数有关，所以<code>时间复杂度</code>为v0:O(4n)/v1:O(2n)。</li>
+<li>空间复杂度<br>v0:O(4n)/v1:O(n)。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><a href="https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&tqId=11178&tPage=2&rp=2&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">牛客网提供编辑器</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剑指offer</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/06%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-数据结构与算法/剑指offer/05二叉树中和某一值的路径" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
